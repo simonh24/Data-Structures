@@ -94,13 +94,16 @@ class DoublyLinkedList:
     List and inserts it as the new head node of the List.
     """
     def move_to_front(self, node):
-        pass
-        # temp = self.head
-        # while temp is not None:
-        #     if node.value == temp.value:
-        #         break
-        #     temp = temp.next
-        # self.add_to_head(temp.value)
+        temp = self.head
+        while temp is not None:
+            if node.value == temp.value:
+                break
+            temp = temp.next
+        if temp.prev is not None:
+            temp.prev.next = temp.next
+        if temp.next is not None:
+            temp.next.prev = temp.prev
+        self.add_to_head(temp.value)
         
     """
     Removes the input node from its current spot in the 
@@ -114,16 +117,26 @@ class DoublyLinkedList:
     order of the other elements of the List.
     """
     def delete(self, node):
-        temp = self.head
-        while not temp.value == node.value:
-            temp = temp.next
-        if temp.next is not None:
-            temp.next.prev = temp.prev
-        if temp.prev is not None:
-            temp.prev.next = temp.next
-        if self.length == 1:
+        if self.head == self.tail:
             self.head = None
             self.tail = None
+        else:
+            temp = self.head
+            while temp is not None:
+                if node.value == temp.value:
+                    break
+                temp = temp.next
+            if node.value == self.head.value:
+                if self.length == 2:
+                    self.head = self.tail
+                else:
+                    self.head = node.next
+            if node.value == self.tail.value:
+                self.tail = node.prev
+            if temp.next is not None:
+                temp.next.prev = node.prev
+            if temp.prev is not None:
+                temp.prev.next = node.next
         self.length -= 1
         
     """
