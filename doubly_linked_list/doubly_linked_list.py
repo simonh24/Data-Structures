@@ -103,12 +103,8 @@ class DoublyLinkedList:
             if node.value == temp.value:
                 break
             temp = temp.next
-        if temp.prev is not None:
-            temp.prev.next = temp.next
-        if temp.next is not None:
-            temp.next.prev = temp.prev
+        self.delete(temp)
         self.add_to_head(temp.value)
-        self.length -= 1
         
     """
     Removes the input node from its current spot in the 
@@ -120,12 +116,8 @@ class DoublyLinkedList:
             if node.value == temp.value:
                 break
             temp = temp.next
-        if temp.prev is not None:
-            temp.prev.next = temp.next
-        if temp.next is not None:
-            temp.next.prev = temp.prev
+        self.delete(temp)
         self.add_to_tail(temp.value)
-        self.length -= 1
 
     """
     Deletes the input node from the List, preserving the 
