@@ -103,14 +103,32 @@ class DoublyLinkedList:
             temp.prev.next = temp.next
         if temp.next is not None:
             temp.next.prev = temp.prev
-        self.add_to_head(temp.value)
+        if self.length == 0:
+            self.head = ListNode(value)
+            self.tail = ListNode(value)
+            return
+        else:
+            self.tail.next = ListNode(value, self.tail, None)
+            self.tail = self.tail.next
+            return
+        self.length -= 1
         
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
     """
     def move_to_end(self, node):
-        pass
+        temp = self.head
+        while temp is not None:
+            if node.value == temp.value:
+                break
+            temp = temp.next
+        if temp.prev is not None:
+            temp.prev.next = temp.next
+        if temp.next is not None:
+            temp.next.prev = temp.prev
+        self.add_to_tail(temp.value)
+        self.length -= 1
 
     """
     Deletes the input node from the List, preserving the 
@@ -151,3 +169,17 @@ class DoublyLinkedList:
                 max_val = temp.value
             temp = temp.next
         return max_val
+
+testlist = DoublyLinkedList(ListNode(1))
+print(testlist.head.value)
+print(testlist.tail.value)
+testlist.add_to_head(40)
+print(testlist.head.value)
+print(testlist.head.prev)
+print(testlist.head.next)
+print(testlist.tail.value)
+print(testlist.tail.prev)
+print(testlist.tail.value)
+testlist.move_to_end(testlist.head)
+print(testlist.head.value)
+print(testlist.tail.value)
